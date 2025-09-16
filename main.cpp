@@ -43,16 +43,15 @@ int main() {
         return 0;
     }
     
-    cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C. ";
-    char abc;
-    cin>>abc;
-    
     for(int z=0; z<m; z++) {
         Studentas st=Stud_iv();
         if(st.valid)
             Grupe.push_back(st);
     }
-    if (!Grupe.empty()) {  
+    if (!Grupe.empty()) {
+        cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
+        char abc;
+        cin>>abc;
         cout<<setw(18)<<left<<"Pavardė";
         cout<<setw(18)<<left<<"Vardas";
         if (abc=='A')
@@ -82,7 +81,7 @@ int main() {
     }
 }
 Studentas Stud_iv() {
-    int n, laik_paz, sum=0;
+    int laik_paz, sum=0;
     Studentas Pirmas;
     cout<<"Uzpildykite pasirinkto studento duomenis"<<endl;
     cout<<"Studento vardas: "; cin>>Pirmas.var;
@@ -102,24 +101,33 @@ Studentas Stud_iv() {
             return Pirmas;
         }
     }
-    cout<<"Iveskite studento gautu pazymiu skaiciu"<<endl;
-    cout<<"Kiek pazymiu gavo "<<Pirmas.var<<" "<<Pirmas.pav<<"? "; cin>>n;
-    if (cin.fail()) {
-        cout<<"Klaida! Pazymiu skaicius rasomas arabiskais skaitmenimis! "<<endl;
-        Pirmas.valid = false;
-        return Pirmas;
-    }
     
-    for(int a=0;a<n;a++) {
-        cout<<a+1<<": "; cin>>laik_paz;
-        if (cin.fail() || laik_paz<1 || laik_paz>10) {
-            cout<<"Klaidingai ivesti duomenys"<<endl;
-            Pirmas.valid = false;
-            return Pirmas;
+    cout<<"Iveskite studento gautus pazymius. Baige vesti norimus pazymius iveskite 0."<<endl;
+    
+    int numeris=1;
+    
+    while (true) {
+        cout<<numeris<<" pazymys: ";
+        cin>>laik_paz;
+        
+        if (cin.fail()) {
+            cout<<"Klaidingai ivestas pazymys."<<endl;
+            cin.clear();
+            cin.ignore();
+            continue;
         }
+        if (laik_paz==0) break;
+        if(laik_paz<1||laik_paz>10) {
+            cout<<"Pazymiai turi buti vedami nuo 1 iki 10."<<endl;
+            continue;
+        }
+        
         Pirmas.paz.push_back(laik_paz);
-        sum+=laik_paz; 
+        sum+=laik_paz;
+        numeris++;
     }
+
+
     cout<<"Iveskite gauta studento egzamino pazymi: "; cin>>Pirmas.egz;
     if (cin.fail() || Pirmas.egz<1 || Pirmas.egz>10) {
             cout<<"Klaidingai ivesti duomenys"<<endl;
@@ -127,8 +135,8 @@ Studentas Stud_iv() {
             return Pirmas;
         }
         
-    if (n>0) {
-        double vid=double(sum)/double(n);
+    if (!Pirmas.paz.empty()) {
+        double vid=double(sum)/double(Pirmas.paz.size());
         Pirmas.vidur=vid*0.4+Pirmas.egz*0.6;
         double medi=ieskommediana(Pirmas.paz);
         Pirmas.median=medi*0.4+Pirmas.egz*0.6;
