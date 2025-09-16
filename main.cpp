@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 
 using std::cout;
@@ -15,6 +16,7 @@ using std::right;
 using std::string;
 using std::fixed;
 using std::setprecision;
+using std::sort;
 
 
 struct Studentas {
@@ -22,12 +24,14 @@ struct Studentas {
     string pav;
     vector <int> paz;
     int egz;
-    double gal;
+    double vidur;
+    double median;
     bool valid = true;
 };
 
 
 Studentas Stud_iv();
+double ieskommediana(vector <int> paz);
 
 int main() {
     vector<Studentas> Grupe;
@@ -39,6 +43,10 @@ int main() {
         return 0;
     }
     
+    cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C. ";
+    char abc;
+    cin>>abc;
+    
     for(int z=0; z<m; z++) {
         Studentas st=Stud_iv();
         if(st.valid)
@@ -47,13 +55,29 @@ int main() {
     if (!Grupe.empty()) {  
         cout<<setw(18)<<left<<"Pavardė";
         cout<<setw(18)<<left<<"Vardas";
-        cout<<setw(22)<<left<<"Galutinis (Vid.)"<<endl;
-        cout<<string(52, '-')<<endl;
+        if (abc=='A')
+            cout<<setw(22)<<left<<"Galutinis (Vid.)";
+        if (abc=='B')
+            cout<<setw(22)<<left<<"Galutinis (Med.)";
+        if (abc=='C') {
+            cout<<setw(22)<<left<<"Galutinis (Vid.)";
+            cout<<setw(22)<<left<<"Galutinis (Med.)";
+        }
+        cout<<endl;
+        cout<<string(65, '-')<<endl;
 
         for (auto s: Grupe) {
             cout<<setw(18)<<left<<s.pav;
             cout<<setw(18)<<left<<s.var;
-            cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.gal<<endl;
+            if (abc=='A')
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
+            if (abc=='B')    
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
+            if (abc=='C') {   
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
+            }  
+            cout<<endl;
         }
     }
 }
@@ -81,7 +105,7 @@ Studentas Stud_iv() {
     cout<<"Iveskite studento gautu pazymiu skaiciu"<<endl;
     cout<<"Kiek pazymiu gavo "<<Pirmas.var<<" "<<Pirmas.pav<<"? "; cin>>n;
     if (cin.fail()) {
-        cout<<"Klaida! Pazymiu skaicius rasomas arabiskais skaitmenimis!"<<endl;
+        cout<<"Klaida! Pazymiu skaicius rasomas arabiskais skaitmenimis! "<<endl;
         Pirmas.valid = false;
         return Pirmas;
     }
@@ -103,10 +127,29 @@ Studentas Stud_iv() {
             return Pirmas;
         }
         
-    if (n>0)    
-        Pirmas.gal=double(sum)/double(n)*0.4+Pirmas.egz*0.6;
-    else 
-        Pirmas.gal=0.6*Pirmas.egz;
+    if (n>0) {
+        double vid=double(sum)/double(n);
+        Pirmas.vidur=vid*0.4+Pirmas.egz*0.6;
+        double medi=ieskommediana(Pirmas.paz);
+        Pirmas.median=medi*0.4+Pirmas.egz*0.6;
+    }
+    else {
+        Pirmas.vidur=0.6*Pirmas.egz;
+        Pirmas.median=0.6*Pirmas.egz;
+    }
     
     return Pirmas;
+}
+
+double ieskommediana (vector<int> paz) {
+    double h;
+    sort(paz.begin(), paz.end());
+    int n=paz.size();
+    if (n%2==1) {
+        h=paz[n/2];
+    }
+    else {
+        h=(paz[n/2-1]+paz[n/2])/2.0;
+    }
+    return h;
 }
