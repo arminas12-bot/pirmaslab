@@ -73,11 +73,11 @@ int main() {
         for (auto s: Grupe) {
             cout<<setw(18)<<left<<s.pav;
             cout<<setw(18)<<left<<s.var;
-            if (abc=='A'|abc=='a')
+            if (abc=='A'||abc=='a')
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
-            if (abc=='B'|abc=='b')    
+            if (abc=='B'||abc=='b')    
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
-            if (abc=='C'|abc=='c') {   
+            if (abc=='C'||abc=='c') {   
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
             }  
