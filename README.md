@@ -1,1 +1,1 @@
-# pirmaslab
+Pirmasis lab. darbas
