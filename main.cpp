@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <random>
 
 
 using std::cout;
@@ -17,6 +18,10 @@ using std::string;
 using std::fixed;
 using std::setprecision;
 using std::sort;
+using std::uniform_int_distribution;
+using std::random_device;
+using std::mt19937;
+
 
 
 struct Studentas {
@@ -54,11 +59,11 @@ int main() {
         cin>>abc;
         cout<<setw(18)<<left<<"Pavardė";
         cout<<setw(18)<<left<<"Vardas";
-        if (abc=='A')
+        if (abc=='A'|abc=='a')
             cout<<setw(22)<<left<<"Galutinis (Vid.)";
-        if (abc=='B')
+        if (abc=='B'|abc=='b')
             cout<<setw(22)<<left<<"Galutinis (Med.)";
-        if (abc=='C') {
+        if (abc=='C'|abc=='c') {
             cout<<setw(22)<<left<<"Galutinis (Vid.)";
             cout<<setw(22)<<left<<"Galutinis (Med.)";
         }
@@ -68,11 +73,11 @@ int main() {
         for (auto s: Grupe) {
             cout<<setw(18)<<left<<s.pav;
             cout<<setw(18)<<left<<s.var;
-            if (abc=='A')
+            if (abc=='A'|abc=='a')
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
-            if (abc=='B')    
+            if (abc=='B'|abc=='b')    
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
-            if (abc=='C') {   
+            if (abc=='C'|abc=='c') {   
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
                 cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
             }  
@@ -102,6 +107,37 @@ Studentas Stud_iv() {
         }
     }
     
+    cout<<"Jeigu pazymius norite generuoti automatiskai, rasykite TAIP, jeigu norite vesti ranka, tuomet rasykite NE."<<endl;
+    cout<<"Jusu atsakymas (TAIP/NE) : ";
+    string atsitik;
+    cin>>atsitik;
+    if (atsitik=="Taip"||atsitik=="taip"||atsitik=="TAIP") {
+        random_device rando;
+    
+        mt19937 mt(rando());
+    
+        uniform_int_distribution <int> dydis(1,10);
+    
+        uniform_int_distribution <int> generuoja(5,15);
+        int pazymiu_skaicius=generuoja(mt);
+    
+        for (int i=0; i<pazymiu_skaicius; i++) {
+            int paz=dydis(mt);
+            Pirmas.paz.push_back(paz);
+            sum=sum+paz;
+        }
+        cout<<"Sugeneruoti atsitiktiniai iverciai: ";
+        for (int ivert: Pirmas.paz) {
+            cout<<ivert<<" ";
+        }
+        cout<<endl;
+        
+        
+        Pirmas.egz=dydis(mt);
+        cout<<"Atsitiktinis egzaminos balas: "<<Pirmas.egz<<endl;
+        cout<<"Automatiskai atsitiktiniu budu sugeneruotas buvo 1 egzamino ivertinimas ir "<<pazymiu_skaicius<<" pazymiai."<<endl;
+    }
+    else {
     cout<<"Iveskite studento gautus pazymius. Baige vesti norimus pazymius iveskite 0."<<endl;
     
     int numeris=1;
@@ -134,7 +170,7 @@ Studentas Stud_iv() {
             Pirmas.valid = false;
             return Pirmas;
         }
-        
+    }    
     if (!Pirmas.paz.empty()) {
         double vid=double(sum)/double(Pirmas.paz.size());
         Pirmas.vidur=vid*0.4+Pirmas.egz*0.6;
