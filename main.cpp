@@ -59,11 +59,11 @@ int main() {
         cin>>abc;
         cout<<setw(18)<<left<<"Pavardė";
         cout<<setw(18)<<left<<"Vardas";
-        if (abc=='A'|abc=='a')
+        if (abc=='A'||abc=='a')
             cout<<setw(22)<<left<<"Galutinis (Vid.)";
-        if (abc=='B'|abc=='b')
+        if (abc=='B'||abc=='b')
             cout<<setw(22)<<left<<"Galutinis (Med.)";
-        if (abc=='C'|abc=='c') {
+        if (abc=='C'||abc=='c') {
             cout<<setw(22)<<left<<"Galutinis (Vid.)";
             cout<<setw(22)<<left<<"Galutinis (Med.)";
         }
