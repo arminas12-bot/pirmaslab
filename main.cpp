@@ -25,6 +25,7 @@ using std::random_device;
 using std::mt19937;
 using std::ifstream;
 using std::istringstream;
+using std::sort;
 
 
 
@@ -41,7 +42,7 @@ struct Studentas {
 
 Studentas Stud_iv();
 double ieskommediana(vector <int> paz);
-void failiukas(vector <Studentas> & Grupe, string failassupavadinimu);
+bool failiukas(vector <Studentas> & Grupe, string failassupavadinimu);
 void atvaizd(vector <Studentas> & Grupe);
 
 int main() {
@@ -69,11 +70,13 @@ int main() {
     }
     
     else if (pasirinkta=='f'||pasirinkta=='F') {
-        failiukas(Grupe, "kursiokai.txt");
-        cout<<"Sekmingai pavyko nuskaityti duomenis is failo. "<<endl;
+        if (failiukas(Grupe, "kursiokai.txt")) {
+            cout<<"Sekmingai pavyko nuskaityti duomenis is failo. "<<endl;
+            atvaizd(Grupe);
+        };
     }
-}
 
+}
 Studentas Stud_iv() {
     int laik_paz, sum=0;
     Studentas Pirmas;
@@ -186,11 +189,11 @@ double ieskommediana (vector<int> paz) {
     return h;
 }
 
-void failiukas(vector <Studentas> & Grupe, string failassupavadinimu) {
+bool failiukas(vector <Studentas> & Grupe, string failassupavadinimu) {
     ifstream skaitymui(failassupavadinimu);
     if (!skaitymui.is_open()) {
-        cout<<"Nesekmingas atidarymass "<<failassupavadinimu;
-        return;
+        cout<<"Nesekmingas atidarymass "<<failassupavadinimu<<endl;
+        return false;
     }
     
     string visaeil;
@@ -229,10 +232,15 @@ void failiukas(vector <Studentas> & Grupe, string failassupavadinimu) {
         Grupe.push_back(studencioks);
     }
     skaitymui.close();
+    return true;
+}
+bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard) {
+    return pirmvard.var<antrvard.var;
 }
 
 void atvaizd (vector <Studentas> & Grupe) {
     if (!Grupe.empty()) {
+        sort (Grupe.begin(), Grupe.end(), sortinamVardus);
         cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin>>abc;
