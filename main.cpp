@@ -45,10 +45,19 @@ double ieskommediana(vector <int> paz);
 bool failiukas(vector <Studentas> & Grupe, string failassupavadinimu);
 void atvaizd(vector <Studentas> & Grupe);
 
+bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard) {
+    return pirmvard.var<antrvard.var;}
+
+bool sortinamPavardes(Studentas & pirmpavard, Studentas & antrpavard) {
+    return pirmpavard.pav<antrpavard.pav;}
+    
+bool sortinam_balus_didz(Studentas & pirmbalas, Studentas & antrbalas) {
+    return pirmbalas.vidur>antrbalas.vidur;}
+
 int main() {
     vector<Studentas> Grupe;
     
-    cout<<"Ar duomenis norite vesti pats, ar nuskaityti is failo kursiokai.txt? Jei pats, rasykite raide p(P), o jei is failo, tuomet f(F)."<<endl;
+    cout<<"Ar duomenis norite vesti pats, ar nuskaityti is failo? Jei pats, rasykite raide p(P), o jei is failo, tuomet f(F)."<<endl;
     char pasirinkta;
     cin>>pasirinkta;
     
@@ -70,13 +79,13 @@ int main() {
     }
     
     else if (pasirinkta=='f'||pasirinkta=='F') {
-        if (failiukas(Grupe, "kursiokai.txt")) {
+        if (failiukas(Grupe, "kursioki.txt")) {
             cout<<"Sekmingai pavyko nuskaityti duomenis is failo. "<<endl;
             atvaizd(Grupe);
         };
     }
-
 }
+
 Studentas Stud_iv() {
     int laik_paz, sum=0;
     Studentas Pirmas;
@@ -192,7 +201,7 @@ double ieskommediana (vector<int> paz) {
 bool failiukas(vector <Studentas> & Grupe, string failassupavadinimu) {
     ifstream skaitymui(failassupavadinimu);
     if (!skaitymui.is_open()) {
-        cout<<"Nesekmingas atidarymass "<<failassupavadinimu<<endl;
+        cout<<"Nesekmingas atidarymass "<<failassupavadinimu<<"."<<endl;
         return false;
     }
     
@@ -234,13 +243,15 @@ bool failiukas(vector <Studentas> & Grupe, string failassupavadinimu) {
     skaitymui.close();
     return true;
 }
-bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard) {
-    return pirmvard.var<antrvard.var;
-}
 
 void atvaizd (vector <Studentas> & Grupe) {
     if (!Grupe.empty()) {
-        sort (Grupe.begin(), Grupe.end(), sortinamVardus);
+        cout<<"Kaip norite atlikti rusiavimas? Pagal vardus - 1, pagal pavardes - 2, pagal vidurkius - 3. "<<endl;
+        int prad;
+        cin>>prad;
+        if (prad==1) {sort (Grupe.begin(), Grupe.end(), sortinamVardus);}
+        else if (prad==2) sort (Grupe.begin(), Grupe.end(), sortinamPavardes);
+        else if (prad==3) sort (Grupe.begin(), Grupe.end(), sortinam_balus_didz);
         cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin>>abc;
