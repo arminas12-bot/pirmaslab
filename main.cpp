@@ -4,6 +4,8 @@
 #include <string>
 #include <algorithm>
 #include <random>
+#include <fstream>
+#include <sstream>
 
 
 using std::cout;
@@ -21,6 +23,8 @@ using std::sort;
 using std::uniform_int_distribution;
 using std::random_device;
 using std::mt19937;
+using std::ifstream;
+using std::istringstream;
 
 
 
@@ -37,54 +41,39 @@ struct Studentas {
 
 Studentas Stud_iv();
 double ieskommediana(vector <int> paz);
+void failiukas(vector <Studentas> & Grupe, string failassupavadinimu);
+void atvaizd(vector <Studentas> & Grupe);
 
 int main() {
     vector<Studentas> Grupe;
-    cout<<"Iveskite studentu skaiciu grupeje: ";
-    int m;
-    cin>>m;
-    if (m<=0) {
-        cout<<"Klaidingai ivesti duomenys. Studentu skaicius turi buti rasomas arabiskais skaitmenimis ir turi buti didesnis uz 0."<<endl;
-        return 0;
+    
+    cout<<"Ar duomenis norite vesti pats, ar nuskaityti is failo kursiokai.txt? Jei pats, rasykite raide p(P), o jei is failo, tuomet f(F)."<<endl;
+    char pasirinkta;
+    cin>>pasirinkta;
+    
+    if (pasirinkta=='p'||pasirinkta=='P') {
+        cout<<"Iveskite studentu skaiciu grupeje: ";
+        int m;
+        cin>>m;
+        if (m<=0) {
+            cout<<"Klaidingai ivesti duomenys. Studentu skaicius turi buti rasomas arabiskais skaitmenimis ir turi buti didesnis uz 0."<<endl;
+            return 0;
+        }
+    
+        for(int z=0; z<m; z++) {
+            Studentas st=Stud_iv();
+            if(st.valid)
+                Grupe.push_back(st);
+        }
+        atvaizd(Grupe);
     }
     
-    for(int z=0; z<m; z++) {
-        Studentas st=Stud_iv();
-        if(st.valid)
-            Grupe.push_back(st);
-    }
-    if (!Grupe.empty()) {
-        cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
-        char abc;
-        cin>>abc;
-        cout<<setw(18)<<left<<"Pavardė";
-        cout<<setw(18)<<left<<"Vardas";
-        if (abc=='A'||abc=='a')
-            cout<<setw(22)<<left<<"Galutinis (Vid.)";
-        if (abc=='B'||abc=='b')
-            cout<<setw(22)<<left<<"Galutinis (Med.)";
-        if (abc=='C'||abc=='c') {
-            cout<<setw(22)<<left<<"Galutinis (Vid.)";
-            cout<<setw(22)<<left<<"Galutinis (Med.)";
-        }
-        cout<<endl;
-        cout<<string(65, '-')<<endl;
-
-        for (auto s: Grupe) {
-            cout<<setw(18)<<left<<s.pav;
-            cout<<setw(18)<<left<<s.var;
-            if (abc=='A'||abc=='a')
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
-            if (abc=='B'||abc=='b')    
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
-            if (abc=='C'||abc=='c') {   
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
-            }  
-            cout<<endl;
-        }
+    else if (pasirinkta=='f'||pasirinkta=='F') {
+        failiukas(Grupe, "kursiokai.txt");
+        cout<<"Sekmingai pavyko nuskaityti duomenis is failo. "<<endl;
     }
 }
+
 Studentas Stud_iv() {
     int laik_paz, sum=0;
     Studentas Pirmas;
@@ -163,7 +152,6 @@ Studentas Stud_iv() {
         numeris++;
     }
 
-
     cout<<"Iveskite gauta studento egzamino pazymi: "; cin>>Pirmas.egz;
     if (cin.fail() || Pirmas.egz<1 || Pirmas.egz>10) {
             cout<<"Klaidingai ivesti duomenys"<<endl;
@@ -196,4 +184,83 @@ double ieskommediana (vector<int> paz) {
         h=(paz[n/2-1]+paz[n/2])/2.0;
     }
     return h;
+}
+
+void failiukas(vector <Studentas> & Grupe, string failassupavadinimu) {
+    ifstream skaitymui(failassupavadinimu);
+    if (!skaitymui.is_open()) {
+        cout<<"Nesekmingas atidarymass "<<failassupavadinimu;
+        return;
+    }
+    
+    string visaeil;
+    while (getline(skaitymui, visaeil)) {
+        if(visaeil.empty()) continue;
+        
+        istringstream kintam(visaeil);
+        Studentas studencioks;
+        kintam>>studencioks.pav>>studencioks.var;
+        
+        vector <int> paz;
+        int j;
+        
+        while (kintam>>j) {
+            paz.push_back(j);
+        }
+        
+        if (paz.empty()) continue;
+        
+        studencioks.egz=paz.back();
+        paz.pop_back();
+        studencioks.paz=paz;
+        
+        double sum=0;
+        for (int q: paz)
+        sum=sum+q;
+        
+        if (!paz.empty()) {
+            studencioks.vidur=(sum/paz.size())*0.4+studencioks.egz*0.6;
+            studencioks.median=ieskommediana(paz)*0.4+studencioks.egz*0.6;
+        }
+        else {
+            studencioks.vidur=0.6*studencioks.egz;
+            studencioks.median=0.6*studencioks.egz;
+        }
+        Grupe.push_back(studencioks);
+    }
+    skaitymui.close();
+}
+
+void atvaizd (vector <Studentas> & Grupe) {
+    if (!Grupe.empty()) {
+        cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
+        char abc;
+        cin>>abc;
+        cout<<setw(18)<<left<<"Pavardė";
+        cout<<setw(18)<<left<<"Vardas";
+        if (abc=='A'||abc=='a')
+            cout<<setw(22)<<left<<"Galutinis (Vid.)";
+        if (abc=='B'||abc=='b')
+            cout<<setw(22)<<left<<"Galutinis (Med.)";
+        if (abc=='C'||abc=='c') {
+            cout<<setw(22)<<left<<"Galutinis (Vid.)";
+            cout<<setw(22)<<left<<"Galutinis (Med.)";
+        }
+        cout<<endl;
+        cout<<string(65, '-')<<endl;
+
+        for (auto s: Grupe) {
+            cout<<setw(18)<<left<<s.pav;
+            cout<<setw(18)<<left<<s.var;
+            if (abc=='A'||abc=='a')
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
+            if (abc=='B'||abc=='b')    
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
+            if (abc=='C'||abc=='c') {   
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
+                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
+            }  
+            cout<<endl;
+        }
+    }
 }
