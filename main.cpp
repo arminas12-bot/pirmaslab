@@ -57,7 +57,7 @@ bool sortinam_balus_didz(Studentas & pirmbalas, Studentas & antrbalas) {
 int main() {
     vector<Studentas> Grupe;
     
-    cout<<"Ar duomenis norite vesti pats, ar nuskaityti is failo? Jei pats, rasykite raide p(P), o jei is failo, tuomet f(F)."<<endl;
+    cout<<"Ar duomenis norite vesti pats, ar nuskaityti is failo kursiokai.txt? Jei pats, rasykite raide p(P), o jei is failo, tuomet f(F)."<<endl;
     char pasirinkta;
     cin>>pasirinkta;
     
@@ -79,7 +79,7 @@ int main() {
     }
     
     else if (pasirinkta=='f'||pasirinkta=='F') {
-        if (failiukas(Grupe, "kursioki.txt")) {
+        if (failiukas(Grupe, "kursiokai.txt")) {
             cout<<"Sekmingai pavyko nuskaityti duomenis is failo. "<<endl;
             atvaizd(Grupe);
         };
@@ -281,5 +281,18 @@ void atvaizd (vector <Studentas> & Grupe) {
             }  
             cout<<endl;
         }
+        double kursovidurkis=0;
+        int islaik=0;
+        int neislaik=0;
+        
+        for (auto & nez : Grupe) {
+            kursovidurkis=kursovidurkis+nez.vidur;
+            if (nez.vidur>=4.5) islaik++;
+            else neislaik++;
+        }
+        kursovidurkis=kursovidurkis/Grupe.size();
+        cout<<"Bendras viso kurso studentu vidurkis: "<<fixed<<setprecision(2)<<kursovidurkis<<endl;
+        cout<<"Teigiama bendra iverti gavo: "<<islaik<<" studentai."<<endl;
+        cout<<"Neigiama bendra iverti gavo ir kursa kartos: "<<neislaik<<" studentai."<<endl;
     }
 }
