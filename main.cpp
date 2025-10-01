@@ -25,9 +25,8 @@ using std::random_device;
 using std::mt19937;
 using std::ifstream;
 using std::istringstream;
-using std::sort;
 using std::ofstream;
-
+using std::stringstream;
 
 
 struct Studentas {
@@ -46,6 +45,9 @@ double ieskommediana(vector <int> paz);
 bool failiukas(vector <Studentas> & Grupe, string failassupavadinimu);
 void atvaizd(vector <Studentas> & Grupe);
 
+void generuojafailus();
+void generuotifaila(string genfail, int iraskiekis);
+
 bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard) {
     return pirmvard.var<antrvard.var;}
 
@@ -58,7 +60,7 @@ bool sortinam_balus_didz(Studentas & pirmbalas, Studentas & antrbalas) {
 int main() {
     vector<Studentas> Grupe;
     
-    cout<<"Ar duomenis norite vesti pats, ar nuskaityti is failo kursiokai.txt? Jei pats, rasykite raide p(P), o jei is failo, tuomet f(F)."<<endl;
+    cout<<"Ar duomenis norite vesti pats, ar nuskaityti is failo kursiokai.txt? Jei pats, rasykite raide p(P), jei is failo, tuomet f(F), o jei generuoti failus - rasykite g(G)."<<endl;
     char pasirinkta;
     cin>>pasirinkta;
     
@@ -91,6 +93,10 @@ int main() {
         else {
             cout<<"Nesekmingas failo nuskaitymas"<<endl;
         }
+    }
+    
+    else if (pasirinkta=='g'||pasirinkta=='G') {
+        generuojafailus();
     }
 }
 
@@ -307,5 +313,48 @@ void atvaizd (vector <Studentas> & Grupe) {
         rezultatai.close();
         
         cout<<"Rezultatai sekmingai issaugoti"<<endl;
+    }
+}
+
+void generuojafailus() {
+    cout<<"Generuojami failai, prasome palaukti"<<endl;
+    generuotifaila("1000stud.txt", 1000);
+    generuotifaila("10000stud.txt", 10000);
+    generuotifaila("100000stud.txt", 100000);
+    generuotifaila("1000000stud.txt", 1000000);
+    generuotifaila("10000000stud.txt", 10000000);
+    cout<<"5 skirtingo dydzio failai sekmingai sugeneruoti"<<endl;
+}
+
+void generuotifaila(string genfail, int iraskiekis) {
+    ofstream failas(genfail);
+    if (!failas.is_open()) {
+        cout<<"Nesekmingas "<<genfail<<" failo sukurimas"<<endl;
+        return;
+    }
+    
+    failas<<left<<setw(20)<<"Pavarde";
+    failas<<left<<setw(20)<<"Vardas";
+    for (int y=1; y<8; y++) {
+        stringstream sstreamas;
+        sstreamas<<"Nd"<<y;
+        failas<<left<<setw(9)<<sstreamas.str();
+    }
+    failas<<left<<setw(9)<<"Egz"<<endl;
+    
+    random_device rando;
+    mt19937 mt(rando());
+    uniform_int_distribution <int> paz(1,10);
+    
+    for (int h=1; h<=iraskiekis; h++) {
+        stringstream stringpav, stringvar;
+        stringpav<<"Pavarde"<<h;
+        stringvar<<"Vardas"<<h;
+        failas<<left<<setw(20)<<stringpav.str();
+        failas<<left<<setw(20)<<stringvar.str();
+        for (int l=0; l<7; l++) {
+            failas<<left<<setw(9)<<paz(mt);
+        }
+        failas<<left<<setw(9)<<paz(mt)<<endl;
     }
 }
