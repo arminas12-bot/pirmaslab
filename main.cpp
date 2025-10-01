@@ -26,6 +26,7 @@ using std::mt19937;
 using std::ifstream;
 using std::istringstream;
 using std::sort;
+using std::ofstream;
 
 
 
@@ -79,10 +80,17 @@ int main() {
     }
     
     else if (pasirinkta=='f'||pasirinkta=='F') {
-        if (failiukas(Grupe, "kursiokai.txt")) {
+        string norimfail;
+        cout<<"Iveskite norimo failo pavadinimas (gale nepamirskite prideti .txt): ";
+        cin>>norimfail;
+        
+        if (failiukas(Grupe, norimfail)) {
             cout<<"Sekmingai pavyko nuskaityti duomenis is failo. "<<endl;
             atvaizd(Grupe);
-        };
+        }
+        else {
+            cout<<"Nesekmingas failo nuskaitymas"<<endl;
+        }
     }
 }
 
@@ -201,7 +209,6 @@ double ieskommediana (vector<int> paz) {
 bool failiukas(vector <Studentas> & Grupe, string failassupavadinimu) {
     ifstream skaitymui(failassupavadinimu);
     if (!skaitymui.is_open()) {
-        cout<<"Nesekmingas atidarymass "<<failassupavadinimu<<"."<<endl;
         return false;
     }
     
@@ -255,31 +262,34 @@ void atvaizd (vector <Studentas> & Grupe) {
         cout<<"Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin>>abc;
-        cout<<setw(18)<<left<<"Pavardė";
-        cout<<setw(18)<<left<<"Vardas";
+        
+        ofstream rezultatai("rezultatufailas.txt");
+        
+        rezultatai<<setw(18)<<left<<"Pavardė";
+        rezultatai<<setw(18)<<left<<"Vardas";
         if (abc=='A'||abc=='a')
-            cout<<setw(22)<<left<<"Galutinis (Vid.)";
+            rezultatai<<setw(22)<<left<<"Galutinis (Vid.)";
         if (abc=='B'||abc=='b')
-            cout<<setw(22)<<left<<"Galutinis (Med.)";
+            rezultatai<<setw(22)<<left<<"Galutinis (Med.)";
         if (abc=='C'||abc=='c') {
-            cout<<setw(22)<<left<<"Galutinis (Vid.)";
-            cout<<setw(22)<<left<<"Galutinis (Med.)";
+            rezultatai<<setw(22)<<left<<"Galutinis (Vid.)";
+            rezultatai<<setw(22)<<left<<"Galutinis (Med.)";
         }
-        cout<<endl;
-        cout<<string(65, '-')<<endl;
+        rezultatai<<endl;
+        rezultatai<<string(65, '-')<<endl;
 
         for (auto s: Grupe) {
-            cout<<setw(18)<<left<<s.pav;
-            cout<<setw(18)<<left<<s.var;
+            rezultatai<<setw(18)<<left<<s.pav;
+            rezultatai<<setw(18)<<left<<s.var;
             if (abc=='A'||abc=='a')
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
+                rezultatai<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
             if (abc=='B'||abc=='b')    
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
+                rezultatai<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
             if (abc=='C'||abc=='c') {   
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
-                cout<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
+                rezultatai<<setw(22)<<left<<fixed<<setprecision(2)<<s.vidur;
+                rezultatai<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
             }  
-            cout<<endl;
+            rezultatai<<endl;
         }
         double kursovidurkis=0;
         int islaik=0;
@@ -291,8 +301,11 @@ void atvaizd (vector <Studentas> & Grupe) {
             else neislaik++;
         }
         kursovidurkis=kursovidurkis/Grupe.size();
-        cout<<"Bendras viso kurso studentu vidurkis: "<<fixed<<setprecision(2)<<kursovidurkis<<endl;
-        cout<<"Teigiama bendra iverti gavo: "<<islaik<<" studentai."<<endl;
-        cout<<"Neigiama bendra iverti gavo ir kursa kartos: "<<neislaik<<" studentai."<<endl;
+        rezultatai<<"Bendras viso kurso studentu vidurkis: "<<fixed<<setprecision(2)<<kursovidurkis<<endl;
+        rezultatai<<"Teigiama bendra iverti gavo: "<<islaik<<" studentai."<<endl;
+        rezultatai<<"Neigiama bendra iverti gavo ir kursa kartos: "<<neislaik<<" studentai."<<endl;
+        rezultatai.close();
+        
+        cout<<"Rezultatai sekmingai issaugoti"<<endl;
     }
 }
