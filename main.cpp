@@ -97,6 +97,23 @@ int main() {
     
     else if (pasirinkta=='g'||pasirinkta=='G') {
         generuojafailus();
+        cout<<"Jei norite toliau dirbti su sugeneruotu failu, iveskite jo pavadinima, jei norite baigti, rasykite raide b(B): ";
+        string failas;
+        cin>>failas;
+        
+        if (failas!="b"&&failas!="B") {
+            Grupe.clear();
+            if (failiukas(Grupe, failas)) {
+                cout<<"Nuskaitymas sekmingas"<<endl;
+                atvaizd(Grupe);
+            }
+            else {
+                cout<<"Nesekmingas nuskaitymas fialo"<<failas<<endl;
+            }
+        }
+        else {
+            cout<<"Viskas baigta, failai sekmingai sukurti"<<endl;
+        }
     }
 }
 
@@ -310,8 +327,46 @@ void atvaizd (vector <Studentas> & Grupe) {
         rezultatai<<"Bendras viso kurso studentu vidurkis: "<<fixed<<setprecision(2)<<kursovidurkis<<endl;
         rezultatai<<"Teigiama bendra iverti gavo: "<<islaik<<" studentai."<<endl;
         rezultatai<<"Neigiama bendra iverti gavo ir kursa kartos: "<<neislaik<<" studentai."<<endl;
-        rezultatai.close();
         
+        ofstream vargsiukai("vargsiukai.txt");
+        ofstream kietekai("kietekai.txt");
+        if (!vargsiukai.is_open()||!kietekai.is_open()) {
+            cout<<"Nepavyko sukurti vargsiuku, kieteku failo";
+        }
+        else {
+            vargsiukai<<setw(17)<<left<<"Pavarde";
+            vargsiukai<<setw(17)<<left<<"Vardas";
+            vargsiukai<<setw(21)<<left<<"Galutinis"<<endl;
+            vargsiukai<<string(65, '-')<<endl;
+            
+            kietekai<<setw(17)<<left<<"Pavarde";
+            kietekai<<setw(17)<<left<<"Vardas";
+            kietekai<<setw(21)<<left<<"Galutinis"<<endl;
+            kietekai<<string(65, '-')<<endl;
+            
+            for (const Studentas & s: Grupe) {
+                double gal;
+                if (abc=='B'||abc=='b') {
+                    gal= s.median;
+                }
+                else 
+                    gal=s.vidur;
+                    
+                if (gal < 5) {
+                    vargsiukai<<setw(17)<<left<<s.pav;
+                    vargsiukai<<setw(17)<<left<<s.var;
+                    vargsiukai<<setw(21)<<left<<fixed<<setprecision(2)<<gal<<endl;
+                } 
+                else {
+                    kietekai<<setw(17)<<left<<s.pav;
+                    kietekai<<setw(17)<<left<<s.var;
+                    kietekai<<setw(21)<<left<<fixed<<setprecision(2)<<gal<<endl;
+                }
+            }
+            vargsiukai.close();
+            kietekai.close();
+        }
+        rezultatai.close();
         cout<<"Rezultatai sekmingai issaugoti"<<endl;
     }
 }
