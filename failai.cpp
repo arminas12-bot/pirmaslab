@@ -72,7 +72,7 @@ void atvaizd (vector <Studentas> & Grupe) {
         rezultatai<<endl;
         rezultatai<<string(65, '-')<<endl;
 
-        for (auto s: Grupe) {
+        for (auto s : Grupe) {
             rezultatai<<setw(18)<<left<<s.pav;
             rezultatai<<setw(18)<<left<<s.var;
             if (abc=='A'||abc=='a')
@@ -84,20 +84,21 @@ void atvaizd (vector <Studentas> & Grupe) {
                 rezultatai<<setw(22)<<left<<fixed<<setprecision(2)<<s.median;
             }  
             rezultatai<<endl;
-        }
-        double kursovidurkis=0;
-        int islaik=0;
-        int neislaik=0;
+        }   
+        vector<Studentas>vargseliai;
+        vector<Studentas>kietiakai;
         
-        for (auto & nez : Grupe) {
-            kursovidurkis=kursovidurkis+nez.vidur;
-            if (nez.vidur>=4.5) islaik++;
-            else neislaik++;
+        auto pradz=high_resolution_clock::now();
+        for (auto s : Grupe) {
+            double gal=(abc=='B'||abc=='b')? s.median:s.vidur;
+            if (gal<5) {
+                vargseliai.push_back(s);
+            }
+            else {
+                kietiakai.push_back(s);
+            }
         }
-        kursovidurkis=kursovidurkis/Grupe.size();
-        rezultatai<<"Bendras viso kurso studentu vidurkis: "<<fixed<<setprecision(2)<<kursovidurkis<<endl;
-        rezultatai<<"Teigiama bendra iverti gavo: "<<islaik<<" studentai."<<endl;
-        rezultatai<<"Neigiama bendra iverti gavo ir kursa kartos: "<<neislaik<<" studentai."<<endl;
+        auto pab=high_resolution_clock::now();
         
         ofstream vargsiukai("vargsiukai.txt");
         ofstream kietekai("kietekai.txt");
@@ -114,7 +115,7 @@ void atvaizd (vector <Studentas> & Grupe) {
             kietekai<<setw(17)<<left<<"Vardas";
             kietekai<<setw(21)<<left<<"Galutinis"<<endl;
             kietekai<<string(65, '-')<<endl;
-            
+            auto ipradz=high_resolution_clock::now();
             for (const Studentas & s: Grupe) {
                 double gal;
                 if (abc=='B'||abc=='b') {
@@ -136,7 +137,28 @@ void atvaizd (vector <Studentas> & Grupe) {
             }
             vargsiukai.close();
             kietekai.close();
+            
+            auto ipab=high_resolution_clock::now();
+            auto w1=duration_cast<milliseconds>(pab-pradz);
+            auto w2=duration_cast<milliseconds>(ipab-ipradz);
+            cout<<"Studentu rusiavimas i dvi grupes uztruko: "<<w1.count()<<" ms."<<endl;
+            cout<<"Studentu surusiuotu isvedimas i du naujus failus uztruko: "<<w2.count()<<" ms."<<endl;
         }
+        double kursovidurkis=0;
+        int islaik=0;
+        int neislaik=0;
+        
+        for (auto & nez : Grupe) {
+            kursovidurkis=kursovidurkis+nez.vidur;
+            if (nez.vidur>=4.5) islaik++;
+            else neislaik++;
+        }
+        kursovidurkis=kursovidurkis/Grupe.size();
+        rezultatai<<"Bendras viso kurso studentu vidurkis: "<<fixed<<setprecision(2)<<kursovidurkis<<endl;
+        rezultatai<<"Teigiama bendra iverti gavo: "<<islaik<<" studentai."<<endl;
+        rezultatai<<"Neigiama bendra iverti gavo ir kursa kartos: "<<neislaik<<" studentai."<<endl;
+        
+
         rezultatai.close();
         cout<<"Rezultatai sekmingai issaugoti"<<endl;
     }
