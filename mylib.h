@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -30,6 +31,8 @@ using std::istringstream;
 using std::ofstream;
 using std::stringstream;
 using std::chrono::high_resolution_clock;
+using std::chrono::milliseconds;
+using std::chrono::duration_cast;
 
 
 struct Studentas {
