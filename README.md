@@ -11,11 +11,11 @@ Nuo šiol programa veikia ne vien tik V0.1 principu, bet ir V0.2, todėl papildo
 -apskaičiuoti ir išvesti, per kiek laiko sukuriamas failas, per kiek laiko nuskaitomi duomenys iš tam tikrų failų, taip pat apskaičiuojamas rūšiavimo veikimo greitis.
 
 Pavyzdys:
-1000 įrašų – failas sukuriamas per 2 ms, nuskaitomas per 3 ms.
-10000 įrašų – failas sukuriamas per 22 ms, nuskaitomas per 31 ms.
-100000 įrašų – failas sukuriamas per 226 ms, nuskaitomas per 339 ms.
-1000000 įrašų – failas sukuriamas per 1127 ms, nuskaitomas per 1690 ms.
-10000000 įrašų – failas sukuriamas per 8964 ms, nuskaitomas per 13441 ms.
+!1000 įrašų – failas sukuriamas per 2 ms, paskutinį kartą nuskaitytas per 3 ms. Failo sugeneravimo vidurkis - 2,2 ms.
+!10000 įrašų – failas sukuriamas per 22 ms, paskutinį kartą nuskaitytas per 31 ms. Failo sugeneravimo vidurkis - 27,2 ms.
+!100000 įrašų – failas sukuriamas per 226 ms, paskutinį kartą nuskaitytas per 339 ms. Failo sugeneravimo vidurkis - 277,4 ms.
+!1000000 įrašų – failas sukuriamas per 1127 ms, paskutinį kartą nuskaitytas per 1690 ms. Failo sugeneravimo vidurkis - 1643 ms.
+!10000000 įrašų – failas sukuriamas per 8964 ms, paskutinį kartą nuskaitytas per 13441 ms. Failo sugeneravimo vidurkis - 13487,8 ms.
 
 Tikslas - sukurti programą, kuri gebėtų ne tik leisti naudotojui įvesti duomenis, bet ir nuskaitytų duomenis iš pateiktų failų.
 
