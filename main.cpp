@@ -32,9 +32,9 @@ int main() {
         
         auto startas = high_resolution_clock::now();
         if (failiukas(Grupe, norimfail)) {
-            auto uztrukimas=high_resolution_clock::now()-startas;
+            auto uztrukimas=duration_cast<milliseconds>(high_resolution_clock::now()-startas);
             cout<<"Sekmingai pavyko nuskaityti duomenis is failo. ";
-            cout<<"Nuskaityti faila uztruko: "<<uztrukimas.count()<<" nanosekundziu."<<endl;
+            cout<<"Nuskaityti faila uztruko: "<<uztrukimas.count()<<" ms."<<endl;
             atvaizd(Grupe);
         }
         else {
@@ -50,11 +50,11 @@ int main() {
         
         if (failas!="b"&&failas!="B") {
             Grupe.clear();
-            auto startas = high_resolution_clock::now();
+            auto startas = (high_resolution_clock::now());
             if (failiukas(Grupe, failas)) {
-                auto uztrukimas=high_resolution_clock::now()-startas;
+                auto uztrukimas=duration_cast<milliseconds>(high_resolution_clock::now()-startas);
                 cout<<"Nuskaitymas sekmingas"<<endl;
-                cout<<"Nuskaityti faila uztruko: "<<uztrukimas.count()<<" nanosekundziu."<<endl;
+                cout<<"Nuskaityti faila uztruko: "<<uztrukimas.count()<<" ms."<<endl;
                 atvaizd(Grupe);
             }
             else {
