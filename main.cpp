@@ -30,8 +30,11 @@ int main() {
         cout<<"Iveskite norimo failo pavadinimas (gale nepamirskite prideti .txt): ";
         cin>>norimfail;
         
+        auto startas = high_resolution_clock::now();
         if (failiukas(Grupe, norimfail)) {
-            cout<<"Sekmingai pavyko nuskaityti duomenis is failo. "<<endl;
+            auto uztrukimas=high_resolution_clock::now()-startas;
+            cout<<"Sekmingai pavyko nuskaityti duomenis is failo. ";
+            cout<<"Nuskaityti faila uztruko: "<<uztrukimas.count()<<" nanosekundziu."<<endl;
             atvaizd(Grupe);
         }
         else {
@@ -47,8 +50,11 @@ int main() {
         
         if (failas!="b"&&failas!="B") {
             Grupe.clear();
+            auto startas = high_resolution_clock::now();
             if (failiukas(Grupe, failas)) {
+                auto uztrukimas=high_resolution_clock::now()-startas;
                 cout<<"Nuskaitymas sekmingas"<<endl;
+                cout<<"Nuskaityti faila uztruko: "<<uztrukimas.count()<<" nanosekundziu."<<endl;
                 atvaizd(Grupe);
             }
             else {
