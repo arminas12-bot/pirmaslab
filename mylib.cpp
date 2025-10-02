@@ -116,8 +116,8 @@ void generuojafailus() {
     generuotifaila("1000stud.txt", 1000);
     generuotifaila("10000stud.txt", 10000);
     generuotifaila("100000stud.txt", 100000);
-    generuotifaila("1000000stud.txt", 1000000);
-    generuotifaila("10000000stud.txt", 10000000);
+     generuotifaila("1000000stud.txt", 1000000);
+    generuotifaila("10000000stud.txt", 10000000);  
     cout<<"5 skirtingo dydzio failai sekmingai sugeneruoti"<<endl;
 }
 
@@ -156,8 +156,8 @@ void generuotifaila(string genfail, int iraskiekis) {
     failas.close();
     
     auto pabaiga=high_resolution_clock::now();
-    auto uztruko=pabaiga-pradzia;
-    cout<<genfail<<".Si faila is visos sukurti uztruko "<<uztruko.count()<<" nanosekundziu."<<endl;
+    auto uztruko=duration_cast<milliseconds>(pabaiga-pradzia);
+    cout<<genfail<<".Si faila is visos sukurti uztruko "<<uztruko.count()<<" ms."<<endl;
 }
 bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard) {
     return pirmvard.var<antrvard.var;}
