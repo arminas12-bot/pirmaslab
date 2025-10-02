@@ -122,6 +122,7 @@ void generuojafailus() {
 }
 
 void generuotifaila(string genfail, int iraskiekis) {
+    auto pradzia=high_resolution_clock::now();
     ofstream failas(genfail);
     if (!failas.is_open()) {
         cout<<"Nesekmingas "<<genfail<<" failo sukurimas"<<endl;
@@ -152,6 +153,11 @@ void generuotifaila(string genfail, int iraskiekis) {
         }
         failas<<left<<setw(9)<<paz(mt)<<endl;
     }
+    failas.close();
+    
+    auto pabaiga=high_resolution_clock::now();
+    auto uztruko=pabaiga-pradzia;
+    cout<<genfail<<".Si faila is visos sukurti uztruko "<<uztruko.count()<<" nanosekundziu."<<endl;
 }
 bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard) {
     return pirmvard.var<antrvard.var;}
