@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <cctype>
+#include <chrono>
 
 
 using std::cout;
@@ -28,6 +29,7 @@ using std::ifstream;
 using std::istringstream;
 using std::ofstream;
 using std::stringstream;
+using std::chrono::high_resolution_clock;
 
 
 struct Studentas {
