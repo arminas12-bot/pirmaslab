@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -53,6 +54,6 @@ double ieskommediana(vector <int> paz);
 void generuojafailus();
 void generuotifaila(string genfail, int iraskiekis);
 
-bool sortinamVardus(Studentas& pirmvard, Studentas& antrvard);
-bool sortinamPavardes(Studentas& pirmpavard, Studentas& antrpavard);
-bool sortinam_balus_didz(Studentas& pirmbalas, Studentas& antrbalas);
+bool sortinamVardus(const Studentas& pirmvard, const Studentas& antrvard);
+bool sortinamPavardes(const Studentas& pirmpavard, const Studentas& antrpavard);
+bool sortinam_balus_didz(const Studentas& pirmbalas, const Studentas& antrbalas);
