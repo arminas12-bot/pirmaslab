@@ -50,12 +50,22 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         cout << "Kaip norite atlikti rusiavimas? Pagal vardus - 1, pagal pavardes - 2, pagal vidurkius - 3. " << endl;
         int prad;
         cin >> prad;
+
+        auto rikiavimopradzia = high_resolution_clock::now();
+
         if (prad == 1) { sort(Grupe.begin(), Grupe.end(), sortinamVardus); }
         else if (prad == 2) sort(Grupe.begin(), Grupe.end(), sortinamPavardes);
         else if (prad == 3) sort(Grupe.begin(), Grupe.end(), sortinam_balus_didz);
+
+        auto rikiavimopabaiga = high_resolution_clock::now();
+        auto rikiavimasuztruko = duration_cast<milliseconds>(rikiavimopabaiga- rikiavimopradzia);
+        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() <<" ms." << endl;
+
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin >> abc;
+
+        auto pradedam = high_resolution_clock::now();
 
         ofstream rezultatai("rezultatufailas.txt");
 
@@ -160,6 +170,10 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
 
 
         rezultatai.close();
+
+        auto pabaigiam = high_resolution_clock::now();
+        auto bendraslaikas = duration_cast<milliseconds>(pabaigiam - pradedam);
+        cout << "Irasymas i rezultatu faila uztruko: " << bendraslaikas.count() << " ms." << endl;
         cout << "Rezultatai sekmingai issaugoti" << endl;
     }
 }
@@ -214,9 +228,17 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         cout << "Kaip norite atlikti rusiavimas? Pagal vardus - 1, pagal pavardes - 2, pagal vidurkius - 3. " << endl;
         int prad;
         cin >> prad;
+
+        auto rikiavimopradzia = high_resolution_clock::now();
+
         if (prad == 1) Grupe.sort(sortinamVardus);
         else if (prad == 2) Grupe.sort(sortinamPavardes);
         else if (prad == 3) Grupe.sort(sortinam_balus_didz);
+
+        auto rikiavimopabaiga = high_resolution_clock::now();
+        auto rikiavimasuztruko = duration_cast<milliseconds>(rikiavimopabaiga - rikiavimopradzia);
+        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() << " ms." << endl;
+
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin >> abc;
