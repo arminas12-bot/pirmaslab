@@ -1,4 +1,4 @@
-include "mylib.h"
+#include "mylib.h"
 #include "failai.h"
 
 int main() {
@@ -55,12 +55,12 @@ int main() {
         else
             sekmingas = failiukassarasas(GrupeS, norimfail);
 
-        auto uztrukimas = duration_cast<milliseconds>(high_resolution_clock::now() - startas);
+        auto uztrukimas = duration_cast<seconds>(high_resolution_clock::now() - startas);
 
         if (sekmingas) {
           
             cout << "Sekmingai pavyko nuskaityti duomenis is failo. ";
-            cout << "Nuskaityti faila uztruko: " << uztrukimas.count() << " ms." << endl;
+            cout << "Nuskaityti faila uztruko: " << uztrukimas.count() << " s." << endl;
             if (konteineris=='V'||konteineris=='v')
                 atvaizdvektorius(GrupeV);
             else
@@ -86,12 +86,12 @@ int main() {
             else
                 sekmingas = failiukassarasas(GrupeS, failas);
 
-                auto uztrukimas = duration_cast<milliseconds>(high_resolution_clock::now() - startas);
+                auto uztrukimas = duration_cast<seconds>(high_resolution_clock::now() - startas);
 
                 if (sekmingas) {
 
                 cout << "Nuskaitymas sekmingas" << endl;
-                cout << "Nuskaityti faila uztruko: " << uztrukimas.count() << " ms." << endl;
+                cout << "Nuskaityti faila uztruko: " << uztrukimas.count() << " s." << endl;
                 if (konteineris=='V'||konteineris=='v')
                     atvaizdvektorius(GrupeV);
                 else
