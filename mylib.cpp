@@ -159,11 +159,11 @@ void generuotifaila(string genfail, int iraskiekis) {
     auto uztruko=duration_cast<milliseconds>(pabaiga-pradzia);
     cout<<genfail<<".Si faila is visos sukurti uztruko "<<uztruko.count()<<" ms."<<endl;
 }
-bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard) {
+bool sortinamVardus(const Studentas & pirmvard, const Studentas & antrvard) {
     return pirmvard.var<antrvard.var;}
 
-bool sortinamPavardes(Studentas & pirmpavard, Studentas & antrpavard) {
+bool sortinamPavardes(const Studentas & pirmpavard, const Studentas & antrpavard) {
     return pirmpavard.pav<antrpavard.pav;}
     
-bool sortinam_balus_didz(Studentas & pirmbalas, Studentas & antrbalas) {
+bool sortinam_balus_didz(const Studentas & pirmbalas, const Studentas & antrbalas) {
     return pirmbalas.vidur>antrbalas.vidur;}
