@@ -9,6 +9,7 @@
 #include <sstream>
 #include <cctype>
 #include <chrono>
+#include <list>
 
 
 using std::cout;
@@ -33,6 +34,7 @@ using std::stringstream;
 using std::chrono::high_resolution_clock;
 using std::chrono::milliseconds;
 using std::chrono::duration_cast;
+using std::list;
 
 
 struct Studentas {
@@ -51,6 +53,6 @@ double ieskommediana(vector <int> paz);
 void generuojafailus();
 void generuotifaila(string genfail, int iraskiekis);
 
-bool sortinamVardus(Studentas & pirmvard, Studentas & antrvard);
-bool sortinamPavardes(Studentas & pirmpavard, Studentas & antrpavard);
-bool sortinam_balus_didz(Studentas & pirmbalas, Studentas & antrbalas);
+bool sortinamVardus(Studentas& pirmvard, Studentas& antrvard);
+bool sortinamPavardes(Studentas& pirmpavard, Studentas& antrpavard);
+bool sortinam_balus_didz(Studentas& pirmbalas, Studentas& antrbalas);
