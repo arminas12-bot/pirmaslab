@@ -58,8 +58,8 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         else if (prad == 3) sort(Grupe.begin(), Grupe.end(), sortinam_balus_didz);
 
         auto rikiavimopabaiga = high_resolution_clock::now();
-        auto rikiavimasuztruko = duration_cast<milliseconds>(rikiavimopabaiga- rikiavimopradzia);
-        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() <<" ms." << endl;
+        auto rikiavimasuztruko = duration_cast<seconds>(rikiavimopabaiga- rikiavimopradzia);
+        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() <<" s." << endl;
 
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
@@ -82,7 +82,7 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         rezultatai << endl;
         rezultatai << string(65, '-') << endl;
 
-        for (auto s : Grupe) {
+        for (const auto & s : Grupe) {
             rezultatai << setw(18) << left << s.pav;
             rezultatai << setw(18) << left << s.var;
             if (abc == 'A' || abc == 'a')
@@ -95,6 +95,28 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
             }
             rezultatai << endl;
         }
+
+        double kursovidurkis = 0;
+        int islaik = 0;
+        int neislaik = 0;
+
+        for (auto& nez : Grupe) {
+            kursovidurkis = kursovidurkis + nez.vidur;
+            if (nez.vidur >= 4.5) islaik++;
+            else neislaik++;
+        }
+        kursovidurkis = kursovidurkis / Grupe.size();
+        rezultatai << "Bendras viso kurso studentu vidurkis: " << fixed << setprecision(2) << kursovidurkis << endl;
+        rezultatai << "Teigiama bendra iverti gavo: " << islaik << " studentai." << endl;
+        rezultatai << "Neigiama bendra iverti gavo ir kursa kartos: " << neislaik << " studentai." << endl;
+
+
+        rezultatai.close();
+
+        auto pabaigiam = high_resolution_clock::now();
+        auto bendraslaikas = duration_cast<seconds>(pabaigiam - pradedam);
+        cout << "Irasymas i rezultatu faila uztruko: " << bendraslaikas.count() << " s." << endl;
+
         vector<Studentas>vargseliai;
         vector<Studentas>kietiakai;
 
@@ -149,32 +171,12 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
             kietekai.close();
 
             auto ipab = high_resolution_clock::now();
-            auto w1 = duration_cast<milliseconds>(pab - pradz);
-            auto w2 = duration_cast<milliseconds>(ipab - ipradz);
-            cout << "Studentu rusiavimas i dvi grupes uztruko: " << w1.count() << " ms." << endl;
-            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << w2.count() << " ms." << endl;
+            auto w1 = duration_cast<seconds>(pab - pradz);
+            auto w2 = duration_cast<seconds>(ipab - ipradz);
+            cout << "Studentu rusiavimas i dvi grupes uztruko: " << w1.count() << " s." << endl;
+            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << w2.count() << " s." << endl;
         }
-        double kursovidurkis = 0;
-        int islaik = 0;
-        int neislaik = 0;
 
-        for (auto& nez : Grupe) {
-            kursovidurkis = kursovidurkis + nez.vidur;
-            if (nez.vidur >= 4.5) islaik++;
-            else neislaik++;
-        }
-        kursovidurkis = kursovidurkis / Grupe.size();
-        rezultatai << "Bendras viso kurso studentu vidurkis: " << fixed << setprecision(2) << kursovidurkis << endl;
-        rezultatai << "Teigiama bendra iverti gavo: " << islaik << " studentai." << endl;
-        rezultatai << "Neigiama bendra iverti gavo ir kursa kartos: " << neislaik << " studentai." << endl;
-
-
-        rezultatai.close();
-
-        auto pabaigiam = high_resolution_clock::now();
-        auto bendraslaikas = duration_cast<milliseconds>(pabaigiam - pradedam);
-        cout << "Irasymas i rezultatu faila uztruko: " << bendraslaikas.count() << " ms." << endl;
-        cout << "Rezultatai sekmingai issaugoti" << endl;
     }
 }
 
@@ -236,12 +238,14 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         else if (prad == 3) Grupe.sort(sortinam_balus_didz);
 
         auto rikiavimopabaiga = high_resolution_clock::now();
-        auto rikiavimasuztruko = duration_cast<milliseconds>(rikiavimopabaiga - rikiavimopradzia);
-        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() << " ms." << endl;
+        auto rikiavimasuztruko = duration_cast<seconds>(rikiavimopabaiga - rikiavimopradzia);
+        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() << " s." << endl;
 
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin >> abc;
+
+        auto pradedam = high_resolution_clock::now();
 
         ofstream rezultatai("rezultatufailas.txt");
 
@@ -258,7 +262,7 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         rezultatai << endl;
         rezultatai << string(65, '-') << endl;
 
-        for (auto s : Grupe) {
+        for (const auto & s : Grupe) {
             rezultatai << setw(18) << left << s.pav;
             rezultatai << setw(18) << left << s.var;
             if (abc == 'A' || abc == 'a')
@@ -271,6 +275,29 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
             }
             rezultatai << endl;
         }
+
+        double kursovidurkis = 0;
+        int islaik = 0;
+        int neislaik = 0;
+
+        for (auto& nez : Grupe) {
+            kursovidurkis = kursovidurkis + nez.vidur;
+            if (nez.vidur >= 4.5) islaik++;
+            else neislaik++;
+        }
+        kursovidurkis = kursovidurkis / Grupe.size();
+        rezultatai << "Bendras viso kurso studentu vidurkis: " << fixed << setprecision(2) << kursovidurkis << endl;
+        rezultatai << "Teigiama bendra iverti gavo: " << islaik << " studentai." << endl;
+        rezultatai << "Neigiama bendra iverti gavo ir kursa kartos: " << neislaik << " studentai." << endl;
+
+
+        rezultatai.close();
+
+        auto pabaigiam = high_resolution_clock::now();
+        auto bendraslaikas = duration_cast<seconds>(pabaigiam - pradedam);
+        cout << "Irasymas i rezultatu faila uztruko: " << bendraslaikas.count() << " s." << endl;
+        cout << "Rezultatai sekmingai issaugoti" << endl;
+
         list<Studentas>vargseliai;
         list<Studentas>kietiakai;
 
@@ -325,27 +352,12 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
             kietekai.close();
 
             auto ipab = high_resolution_clock::now();
-            auto w1 = duration_cast<milliseconds>(pab - pradz);
-            auto w2 = duration_cast<milliseconds>(ipab - ipradz);
-            cout << "Studentu rusiavimas i dvi grupes uztruko: " << w1.count() << " ms." << endl;
-            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << w2.count() << " ms." << endl;
+            auto w1 = duration_cast<seconds>(pab - pradz);
+            auto w2 = duration_cast<seconds>(ipab - ipradz);
+            cout << "Studentu rusiavimas i dvi grupes uztruko: " << w1.count() << " s." << endl;
+            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << w2.count() << " s." << endl;
         }
-        double kursovidurkis = 0;
-        int islaik = 0;
-        int neislaik = 0;
 
-        for (auto& nez : Grupe) {
-            kursovidurkis = kursovidurkis + nez.vidur;
-            if (nez.vidur >= 4.5) islaik++;
-            else neislaik++;
-        }
-        kursovidurkis = kursovidurkis / Grupe.size();
-        rezultatai << "Bendras viso kurso studentu vidurkis: " << fixed << setprecision(2) << kursovidurkis << endl;
-        rezultatai << "Teigiama bendra iverti gavo: " << islaik << " studentai." << endl;
-        rezultatai << "Neigiama bendra iverti gavo ir kursa kartos: " << neislaik << " studentai." << endl;
-
-
-        rezultatai.close();
         cout << "Rezultatai sekmingai issaugoti" << endl;
     }
 }
