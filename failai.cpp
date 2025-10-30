@@ -58,8 +58,8 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         else if (prad == 3) sort(Grupe.begin(), Grupe.end(), sortinam_balus_didz);
 
         auto rikiavimopabaiga = high_resolution_clock::now();
-        auto rikiavimasuztruko = duration_cast<seconds>(rikiavimopabaiga- rikiavimopradzia);
-        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() <<" s." << endl;
+        auto rikiavimasuztruko = duration<double>(rikiavimopabaiga- rikiavimopradzia).count();
+        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " <<fixed<<setprecision(4)<< rikiavimasuztruko<<" s." << endl;
 
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
@@ -114,8 +114,8 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         rezultatai.close();
 
         auto pabaigiam = high_resolution_clock::now();
-        auto bendraslaikas = duration_cast<seconds>(pabaigiam - pradedam);
-        cout << "Irasymas i rezultatu faila uztruko: " << bendraslaikas.count() << " s." << endl;
+        auto bendraslaikas = duration<double>(pabaigiam - pradedam).count();
+        cout << "Irasymas i rezultatu faila uztruko: " << fixed << setprecision(4)<< bendraslaikas << " s." << endl;
 
         vector<Studentas>vargseliai;
         vector<Studentas>kietiakai;
@@ -171,10 +171,10 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
             kietekai.close();
 
             auto ipab = high_resolution_clock::now();
-            auto w1 = duration_cast<seconds>(pab - pradz);
-            auto w2 = duration_cast<seconds>(ipab - ipradz);
-            cout << "Studentu rusiavimas i dvi grupes uztruko: " << w1.count() << " s." << endl;
-            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << w2.count() << " s." << endl;
+            double w1 = duration<double>(pab - pradz).count();
+            double w2 = duration<double>(ipab - ipradz).count();
+            cout << "Studentu rusiavimas i dvi grupes uztruko: " << fixed<<setprecision(4)<< w1 << " s." << endl;
+            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << fixed << setprecision(4) << w2 << " s." << endl;
         }
 
     }
@@ -238,8 +238,8 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         else if (prad == 3) Grupe.sort(sortinam_balus_didz);
 
         auto rikiavimopabaiga = high_resolution_clock::now();
-        auto rikiavimasuztruko = duration_cast<seconds>(rikiavimopabaiga - rikiavimopradzia);
-        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << rikiavimasuztruko.count() << " s." << endl;
+        auto rikiavimasuztruko = duration<double>(rikiavimopabaiga - rikiavimopradzia).count();
+        cout << "Pasirinktas studentu isrikiavimas is viso uztruko: " << fixed << setprecision(4) << rikiavimasuztruko << " s." << endl;
 
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
@@ -294,8 +294,8 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         rezultatai.close();
 
         auto pabaigiam = high_resolution_clock::now();
-        auto bendraslaikas = duration_cast<seconds>(pabaigiam - pradedam);
-        cout << "Irasymas i rezultatu faila uztruko: " << bendraslaikas.count() << " s." << endl;
+        auto bendraslaikas = duration<double>(pabaigiam - pradedam).count();
+        cout << "Irasymas i rezultatu faila uztruko: " << fixed << setprecision(4) << bendraslaikas << " s." << endl;
         cout << "Rezultatai sekmingai issaugoti" << endl;
 
         list<Studentas>vargseliai;
@@ -352,10 +352,10 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
             kietekai.close();
 
             auto ipab = high_resolution_clock::now();
-            auto w1 = duration_cast<seconds>(pab - pradz);
-            auto w2 = duration_cast<seconds>(ipab - ipradz);
-            cout << "Studentu rusiavimas i dvi grupes uztruko: " << w1.count() << " s." << endl;
-            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << w2.count() << " s." << endl;
+            double w1 = duration<double>(pab - pradz).count();
+            double w2 = duration<double>(ipab - ipradz).count();
+            cout << "Studentu rusiavimas i dvi grupes uztruko: " << fixed << setprecision(4) << w1 << " s." << endl;
+            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << fixed << setprecision(4) << w2 << " s." << endl;
         }
 
         cout << "Rezultatai sekmingai issaugoti" << endl;
