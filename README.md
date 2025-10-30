@@ -59,6 +59,8 @@ I) **Studentų rikiavimas (pagal vardus)**
 | 1000000 | 0.453 s|0.1881 s|
 | 10000000 |5.4857 s|2.2341 s|
 
+**Studentų rikiavimo (pagal vardus) vidutinis laikas (testas atliktas 5 kartus), dirbant su 1000000 įrašų failu: vector - 0.431 s, list - 0,193 s.**
+
 II) **Duomenų įrašymas į rezultatų failą**
 | Įrašų kiekis | Vector | List |
 |:--------------|:----------:|-------:|
@@ -68,6 +70,8 @@ II) **Duomenų įrašymas į rezultatų failą**
 | 1000000 |4.7254 s| 4.8847 s|
 | 10000000 |46.7826 s|46.2365 s|
 
+**Studentų duomenų įrašymo į rezultatų failą vidutinis laikas (testas atliktas 5 kartus), dirbant su 1000000 įrašų failu: vector - 4.712 s, list - 4.8985 s.**
+
 III) **Studentų rūšiavimas į grupes pagal įvertinimus**
 | Įrašų kiekis | Vector | List |
 |:--------------|:----------:|-------:|
@@ -76,5 +80,8 @@ III) **Studentų rūšiavimas į grupes pagal įvertinimus**
 | 100000 | 0.0295 s|0.0248 s|
 | 1000000 | 0.2895 s|0.2594 s|
 | 10000000 |3.1769 s|2.5181 s|
+
+**Studentų rūšiavimo į grupes (pagal įvertinimus) vidutinis laikas (testas atliktas 5 kartus), dirbant su 1000000 įrašų failu: vector - 0.2911 s, list - 0.26 s.**
+
 
 IŠVADA: Rezultatai pateikiami lentelėse yra nurodyti sekundėmis. Galima pastebėti, jog rikiavimas greičiau buvo atliekamas dirbant su list tipo konteineriu, duomenų įrašymas į rezultatų failą didelio laiko skirtumo nedaro, o studentų rūšiavimas į dvi grupes (vargšiukus ir kietekus) buvo greitesnis dirbant su list. Taigi, testavimas parodo, jog bendru atveju, dirbant su vector, darbas trunka ilgiau.
