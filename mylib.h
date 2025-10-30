@@ -36,7 +36,7 @@ using std::chrono::high_resolution_clock;
 using std::chrono::milliseconds;
 using std::chrono::duration_cast;
 using std::list;
-
+using std::chrono::duration;
 
 struct Studentas {
     string var;
