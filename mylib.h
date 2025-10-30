@@ -12,7 +12,7 @@
 #include <chrono>
 #include <list>
 
-
+using std::chrono::duration;
 using std::cout;
 using std::cin;
 using std::endl;
