@@ -26,16 +26,20 @@ int main() {
         if (konteineris == 'V' || konteineris == 'v') {
             for (int z = 0; z < m; z++) {
                 Studentas st = Stud_iv();
-                if (st.valid)
+                if (st.valid) {
                     GrupeV.push_back(st);
+                    cout << "Studento ( " << st.var << " " << st.pav << " ) atminties adresas: " <<static_cast<void*>(& GrupeV.back()) << endl;
+                }
             }
             atvaizdvektorius(GrupeV);
         }
         else {
             for (int z = 0; z < m; z++) {
                 Studentas st = Stud_iv();
-                if (st.valid)
+                if (st.valid) {
                     GrupeS.push_back(st);
+                    cout << "Studento ( " << st.var << " " << st.pav << " ) atminties adresas: " << static_cast<void*>(& GrupeS.back()) << endl;
+                }
             }
             atvaizdsarasas(GrupeS);
         }
