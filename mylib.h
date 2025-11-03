@@ -11,8 +11,9 @@
 #include <cctype>
 #include <chrono>
 #include <list>
+#include <iterator>
 
-using std::chrono::duration;
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -34,9 +35,12 @@ using std::ofstream;
 using std::stringstream;
 using std::chrono::high_resolution_clock;
 using std::chrono::milliseconds;
+using std::chrono::seconds;
 using std::chrono::duration_cast;
 using std::list;
 using std::chrono::duration;
+using std::partition_copy;
+using std::back_inserter;
 
 struct Studentas {
     string var;
