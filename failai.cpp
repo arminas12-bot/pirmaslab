@@ -64,6 +64,7 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin >> abc;
+        const bool imed = (abc == 'b' || abc == 'B');
 
         auto pradedam = high_resolution_clock::now();
 
@@ -120,63 +121,50 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         vector<Studentas>vargseliai;
         vector<Studentas>kietiakai;
 
-        auto pradz = high_resolution_clock::now();
-        for (auto s : Grupe) {
-            double gal = (abc == 'B' || abc == 'b') ? s.median : s.vidur;
-            if (gal < 5) {
-                vargseliai.push_back(s);
-            }
-            else {
-                kietiakai.push_back(s);
-            }
+
+        auto pradedamskaidyma = high_resolution_clock::now();
+        pirmastr_vector(Grupe, vargseliai, kietiakai, imed);
+        auto baigiamskaidyma= high_resolution_clock::now();
+        double skaid = duration<double>(baigiamskaidyma - pradedamskaidyma).count();
+
+        cout << "Pirmos strategijos vector skaidymas i 2 kont. uztruko: " << fixed << setprecision(4) << skaid << " s" << endl;
+        ofstream vargsiukaiisv("vargsiukai.txt");
+        ofstream kietekaiisv("kietekai.txt");
+        if (!vargsiukaiisv.is_open() || !kietekaiisv.is_open()) {
+            cout << "Nepavyko sukurti vargsiuku, kieteku failo" << endl;
+            return;
         }
-        auto pab = high_resolution_clock::now();
+        vargsiukaiisv << setw(17) << left << "Pavarde";
+        vargsiukaiisv << setw(17) << left << "Vardas";
+        vargsiukaiisv << setw(21) << left << "Galutinis" << endl;
+        vargsiukaiisv << string(65, '-') << endl;
 
-        ofstream vargsiukai("vargsiukai.txt");
-        ofstream kietekai("kietekai.txt");
-        if (!vargsiukai.is_open() || !kietekai.is_open()) {
-            cout << "Nepavyko sukurti vargsiuku, kieteku failo";
-        }
-        else {
-            vargsiukai << setw(17) << left << "Pavarde";
-            vargsiukai << setw(17) << left << "Vardas";
-            vargsiukai << setw(21) << left << "Galutinis" << endl;
-            vargsiukai << string(65, '-') << endl;
+        kietekaiisv << setw(17) << left << "Pavarde";
+        kietekaiisv << setw(17) << left << "Vardas";
+        kietekaiisv << setw(21) << left << "Galutinis" << endl;
+        kietekaiisv << string(65, '-') << endl;
 
-            kietekai << setw(17) << left << "Pavarde";
-            kietekai << setw(17) << left << "Vardas";
-            kietekai << setw(21) << left << "Galutinis" << endl;
-            kietekai << string(65, '-') << endl;
-            auto ipradz = high_resolution_clock::now();
-            for (const Studentas& s : Grupe) {
-                double gal;
-                if (abc == 'B' || abc == 'b') {
-                    gal = s.median;
-                }
-                else
-                    gal = s.vidur;
+        auto startass = high_resolution_clock::now();
 
-                if (gal < 5) {
-                    vargsiukai << setw(17) << left << s.pav;
-                    vargsiukai << setw(17) << left << s.var;
-                    vargsiukai << setw(21) << left << fixed << setprecision(2) << gal << endl;
-                }
-                else {
-                    kietekai << setw(17) << left << s.pav;
-                    kietekai << setw(17) << left << s.var;
-                    kietekai << setw(21) << left << fixed << setprecision(2) << gal << endl;
-                }
-            }
-            vargsiukai.close();
-            kietekai.close();
-
-            auto ipab = high_resolution_clock::now();
-            double w1 = duration<double>(pab - pradz).count();
-            double w2 = duration<double>(ipab - ipradz).count();
-            cout << "Studentu rusiavimas i dvi grupes uztruko: " << fixed<<setprecision(4)<< w1 << " s." << endl;
-            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << fixed << setprecision(4) << w2 << " s." << endl;
+        for (const auto& s : vargseliai) {
+            const double gal = imed ? s.median : s.vidur;
+            vargsiukaiisv << setw(17) << left << s.pav;
+            vargsiukaiisv << setw(17) << left << s.var;
+            vargsiukaiisv << setw(21) << left << fixed << setprecision(2) << gal << endl;
         }
 
+        for (const auto& s : kietiakai) {
+            const double gal = imed ? s.median : s.vidur;
+            kietekaiisv << setw(17) << left << s.pav;
+            kietekaiisv << setw(17) << left << s.var;
+            kietekaiisv << setw(21) << left << fixed << setprecision(2) << gal << endl;
+        }
+        auto endas = high_resolution_clock::now();
+        cout<<  "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << fixed << setprecision(4) << duration<double>(endas-startass).count() << " s." << endl;
+
+
+        vargsiukaiisv.close();
+        kietekaiisv.close();
     }
 }
 
@@ -244,6 +232,7 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         cout << "Ka norite suskaiciuoti? Tik galutini vidurki - rasykite raide A, jeigu tik mediana - raide B, jeigu abu - raide C: ";
         char abc;
         cin >> abc;
+        const bool imed = (abc == 'b' || abc == 'B');
 
         auto pradedam = high_resolution_clock::now();
 
@@ -301,62 +290,51 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         list<Studentas>vargseliai;
         list<Studentas>kietiakai;
 
-        auto pradz = high_resolution_clock::now();
-        for (auto s : Grupe) {
-            double gal = (abc == 'B' || abc == 'b') ? s.median : s.vidur;
-            if (gal < 5) {
-                vargseliai.push_back(s);
-            }
-            else {
-                kietiakai.push_back(s);
-            }
-        }
-        auto pab = high_resolution_clock::now();
+        auto pradedamskaidyma = high_resolution_clock::now();
+        pirmastr_list(Grupe, vargseliai, kietiakai, imed);
+        auto baigiamskaidyma = high_resolution_clock::now();
+        double skaid = duration<double>(baigiamskaidyma - pradedamskaidyma).count();
 
-        ofstream vargsiukai("vargsiukai.txt");
-        ofstream kietekai("kietekai.txt");
-        if (!vargsiukai.is_open() || !kietekai.is_open()) {
+
+        cout << "Pirmos strategijos list skaidymas i 2 kont. uztruko: " << fixed << setprecision(4) << skaid << " s" << endl;
+        ofstream vargsiukaiisv("vargsiukai.txt");
+        ofstream kietekaiisv("kietekai.txt");
+        if (!vargsiukaiisv.is_open() || !kietekaiisv.is_open()) {
             cout << "Nepavyko sukurti vargsiuku, kieteku failo";
+            return;
         }
-        else {
-            vargsiukai << setw(17) << left << "Pavarde";
-            vargsiukai << setw(17) << left << "Vardas";
-            vargsiukai << setw(21) << left << "Galutinis" << endl;
-            vargsiukai << string(65, '-') << endl;
+        vargsiukaiisv << setw(17) << left << "Pavarde";
+        vargsiukaiisv << setw(17) << left << "Vardas";
+        vargsiukaiisv << setw(21) << left << "Galutinis" << endl;
+        vargsiukaiisv << string(65, '-') << endl;
 
-            kietekai << setw(17) << left << "Pavarde";
-            kietekai << setw(17) << left << "Vardas";
-            kietekai << setw(21) << left << "Galutinis" << endl;
-            kietekai << string(65, '-') << endl;
-            auto ipradz = high_resolution_clock::now();
-            for (const Studentas& s : Grupe) {
-                double gal;
-                if (abc == 'B' || abc == 'b') {
-                    gal = s.median;
-                }
-                else
-                    gal = s.vidur;
+        kietekaiisv << setw(17) << left << "Pavarde";
+        kietekaiisv << setw(17) << left << "Vardas";
+        kietekaiisv << setw(21) << left << "Galutinis" << endl;
+        kietekaiisv << string(65, '-') << endl;
 
-                if (gal < 5) {
-                    vargsiukai << setw(17) << left << s.pav;
-                    vargsiukai << setw(17) << left << s.var;
-                    vargsiukai << setw(21) << left << fixed << setprecision(2) << gal << endl;
-                }
-                else {
-                    kietekai << setw(17) << left << s.pav;
-                    kietekai << setw(17) << left << s.var;
-                    kietekai << setw(21) << left << fixed << setprecision(2) << gal << endl;
-                }
-            }
-            vargsiukai.close();
-            kietekai.close();
+        auto startass = high_resolution_clock::now();
 
-            auto ipab = high_resolution_clock::now();
-            double w1 = duration<double>(pab - pradz).count();
-            double w2 = duration<double>(ipab - ipradz).count();
-            cout << "Studentu rusiavimas i dvi grupes uztruko: " << fixed << setprecision(4) << w1 << " s." << endl;
-            cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << fixed << setprecision(4) << w2 << " s." << endl;
+        for (const auto& s : vargseliai) {
+            const double gal = imed ? s.median : s.vidur;
+            vargsiukaiisv << setw(17) << left << s.pav;
+            vargsiukaiisv << setw(17) << left << s.var;
+            vargsiukaiisv << setw(21) << left << fixed << setprecision(2) << gal << endl;
         }
+
+        for (const auto& s : kietiakai) {
+            const double gal = imed ? s.median : s.vidur;
+            kietekaiisv << setw(17) << left << s.pav;
+            kietekaiisv << setw(17) << left << s.var;
+            kietekaiisv << setw(21) << left << fixed << setprecision(2) << gal << endl;
+        }
+
+        auto endas = high_resolution_clock::now();
+        cout << "Studentu surusiuotu isvedimas i du naujus failus uztruko: " << fixed << setprecision(4) << duration<double>(endas-startass).count() << " s." << endl;
+        vargsiukaiisv.close();
+        kietekaiisv.close();
+
+
 
         cout << "Rezultatai sekmingai issaugoti" << endl;
     }
@@ -371,15 +349,15 @@ void pirmastr_vector(const vector <Studentas>& in, vector<Studentas>& varg, vect
     varg.reserve(in.size() / 2);
     kiet.reserve(in.size() / 2);
 
-    std::partition_copy(in.begin(), in.end(), std::back_inserter(varg), std::back_inserter(kiet), [imammediana](const Studentas& s) {
-        return galutinis(s, imammediana) < 5;
+    partition_copy(in.begin(), in.end(), back_inserter(varg), back_inserter(kiet), [imammediana](const Studentas& s) {
+        return galutinis(s, imammediana) < 5.0;
         });
 }
 
 void pirmastr_list(const list <Studentas>& in, list<Studentas>& varg, list <Studentas>& kiet, bool imammediana) {
     varg.clear(); kiet.clear();
     for (const Studentas& s : in) {
-        if (galutinis(s, imammediana)<5) varg.push_back(s);
+        if (galutinis(s, imammediana)<5.0) varg.push_back(s);
         else
             kiet.push_back(s);
         }
