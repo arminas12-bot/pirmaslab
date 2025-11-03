@@ -361,3 +361,27 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         cout << "Rezultatai sekmingai issaugoti" << endl;
     }
 }
+
+double galutinis(const Studentas& s, bool imammediana) {
+    return imammediana ? s.median : s.vidur;
+}
+
+void pirmastr_vector(const vector <Studentas>& in, vector<Studentas>& varg, vector <Studentas>& kiet, bool imammediana) {
+    varg.clear(); kiet.clear();
+    varg.reserve(in.size() / 2);
+    kiet.reserve(in.size() / 2);
+
+    std::partition_copy(in.begin(), in.end(), std::back_inserter(varg), std::back_inserter(kiet), [imammediana](const Studentas& s) {
+        return galutinis(s, imammediana) < 5;
+        });
+}
+
+void pirmastr_list(const list <Studentas>& in, list<Studentas>& varg, list <Studentas>& kiet, bool imammediana) {
+    varg.clear(); kiet.clear();
+    for (const Studentas& s : in) {
+        if (galutinis(s, imammediana)<5) varg.push_back(s);
+        else
+            kiet.push_back(s);
+        }
+
+}
