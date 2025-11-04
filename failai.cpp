@@ -119,7 +119,7 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         cout << "Irasymas i rezultatu faila uztruko: " << fixed << setprecision(4) << bendraslaikas << " s." << endl;
 
         cout << "Pasirinkite norima skaidymo strategija: " << endl;
-        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris" << endl;
+        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris, 3 - optimizuota, veikianti greičiausiai" << endl;
         int strategija;
         cin >> strategija;
 
@@ -181,6 +181,16 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
             auto baigiam2 = high_resolution_clock::now();
 
             cout << "2 strategijps vector skaidymas uztruko: " << fixed << setprecision(4) << duration<double>(baigiam2 - pradedam2).count() << " s." << endl;
+        }
+        else if (strategija == 3) {
+            vector <Studentas> nukop = Grupe;
+            vector <Studentas> vargseliai;
+            vector <Studentas> kietiakiai;
+            
+            auto pradze = high_resolution_clock::now();
+            treciastr_vector(nukop, vargseliai, kietiakiai, imed);
+            auto pabi = high_resolution_clock::now();
+            cout << "3 strategijos skaidymas uztruko: " << fixed << setprecision(4) << duration<double>(pabi - pradze).count() << " s." << endl;
         }
         else {
             cout << "Blogai ivesta strategija" << endl;
@@ -369,6 +379,16 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
 
             cout << "2 strategijos list skaidymas uztruko: " << fixed << setprecision(4) << duration<double>(baigiam2 - pradedam2).count() << " s." << endl;
         }
+        else if (strategija == 3) {
+            list <Studentas> nukop = Grupe;
+            list <Studentas> vargseliai;
+            list <Studentas> kietiakiai;
+
+            auto pradze = high_resolution_clock::now();
+            treciastr_list(nukop, vargseliai, kietiakiai, imed);
+            auto pabi = high_resolution_clock::now();
+            cout << "3 strategijos skaidymas uztruko: " << fixed << setprecision(4) << duration<double>(pabi - pradze).count() << " s." << endl;
+        }
         else {
             cout << "Blogai ivesta strategija" << endl;
         }
@@ -423,4 +443,35 @@ void antrastr_list(list <Studentas>& in, list<Studentas>& varg, bool imammediana
     copy_if(in.begin(), in.end(), back_inserter(varg), tnet);
 
     in.remove_if(tnet);
+}
+
+void treciastr_vector(vector <Studentas>& in, vector<Studentas>& varg, vector <Studentas>& kiet, bool imammediana) {
+    varg.clear();
+    kiet.clear();
+
+    auto itera = partition(in.begin(), in.end(), [imammediana](const Studentas& s) {
+        return galutinis(s, imammediana) < 5.0;
+        });
+
+    varg.reserve(distance(in.begin(), itera));
+    kiet.reserve(distance(itera, in.end()));
+
+    move(in.begin(), itera, back_inserter(varg));
+    move(itera, in.end(), back_inserter(kiet));
+}
+
+void treciastr_list(list <Studentas>& in, list<Studentas>& varg, list <Studentas>& kiet, bool imammediana) {
+    varg.clear();
+    kiet.clear();
+    
+    for (auto nein = in.begin(); nein != in.end(); ) {
+        if (galutinis(*nein, imammediana) < 5.0) {
+            auto kop = nein++;
+            varg.splice(varg.end(), in, kop);
+        } 
+        else {
+            ++nein;
+        }
+    }
+    kiet.splice(kiet.end(), in);
 }
