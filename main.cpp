@@ -102,7 +102,7 @@ int main() {
                     atvaizdsarasas(GrupeS);
             }
             else {
-                cout << "Nesekmingas nuskaitymas fialo" << failas << endl;
+                cout << "Nesekmingas nuskaitymas failo" << failas << endl;
             }
         }
         else {
