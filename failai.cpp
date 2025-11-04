@@ -47,7 +47,7 @@ bool failiukasvektorius(vector <Studentas>& Grupe, string failassupavadinimu) {
 
 void atvaizdvektorius(vector <Studentas>& Grupe) {
     if (!Grupe.empty()) {
-        cout << "Kaip norite atlikti rusiavimas? Pagal vardus - 1, pagal pavardes - 2, pagal vidurkius - 3. " << endl;
+        cout << "Kaip norite atlikti rusiavima? Pagal vardus - 1, pagal pavardes - 2, pagal vidurkius - 3. " << endl;
         int prad;
         cin >> prad;
 
@@ -180,7 +180,7 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
             antrastr_vector(nekeiciamorg, varg2, imed);
             auto baigiam2 = high_resolution_clock::now();
 
-            cout << "2 strategijps vector skaidymas uztruko: " << fixed << setprecision(4) << duration<double>(baigiam2 - pradedam2).count() << " s." << endl;
+            cout << "2 strategijos vector skaidymas uztruko: " << fixed << setprecision(4) << duration<double>(baigiam2 - pradedam2).count() << " s." << endl;
         }
         else if (strategija == 3) {
             vector <Studentas> nukop = Grupe;
@@ -245,7 +245,7 @@ bool failiukassarasas(list <Studentas>& Grupe, string failassupavadinimu) {
 
 void atvaizdsarasas(list <Studentas>& Grupe) {
     if (!Grupe.empty()) {
-        cout << "Kaip norite atlikti rusiavimas? Pagal vardus - 1, pagal pavardes - 2, pagal vidurkius - 3. " << endl;
+        cout << "Kaip norite atlikti rusiavima? Pagal vardus - 1, pagal pavardes - 2, pagal vidurkius - 3. " << endl;
         int prad;
         cin >> prad;
 
@@ -318,7 +318,7 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         cout << "Rezultatai sekmingai issaugoti" << endl;
 
         cout << "Pasirinkite norima skaidymo strategija: " << endl;
-        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris" << endl;
+        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris, 3 - optimizuota, veikianti greičiausiai" << endl;
         int strategija;
         cin >> strategija;
         if (strategija == 1) {
@@ -449,7 +449,7 @@ void treciastr_vector(vector <Studentas>& in, vector<Studentas>& varg, vector <S
     varg.clear();
     kiet.clear();
 
-    auto itera = partition(in.begin(), in.end(), [imammediana](const Studentas& s) {
+    auto itera = stable_partition(in.begin(), in.end(), [imammediana](const Studentas& s) {
         return galutinis(s, imammediana) < 5.0;
         });
 
@@ -458,6 +458,8 @@ void treciastr_vector(vector <Studentas>& in, vector<Studentas>& varg, vector <S
 
     move(in.begin(), itera, back_inserter(varg));
     move(itera, in.end(), back_inserter(kiet));
+
+    in.clear();
 }
 
 void treciastr_list(list <Studentas>& in, list<Studentas>& varg, list <Studentas>& kiet, bool imammediana) {
