@@ -17,7 +17,6 @@
 using std::cout;
 using std::cin;
 using std::endl;
-using std::string;
 using std::vector;
 using std::setw;
 using std::left;
@@ -41,6 +40,11 @@ using std::list;
 using std::chrono::duration;
 using std::partition_copy;
 using std::back_inserter;
+using std::remove_if;
+using std::copy_if;
+using std::partition;
+using std::stable_partition;
+
 
 struct Studentas {
     string var;
