@@ -15,3 +15,6 @@ void pirmastr_list(const list <Studentas>& in, list<Studentas>& varg, list <Stud
 
 void antrastr_vector(vector <Studentas>& in, vector<Studentas>& varg, bool imammediana);
 void antrastr_list(list <Studentas>& in, list<Studentas>& varg, bool imammediana);
+
+void treciastr_vector(vector <Studentas>& in, vector<Studentas>& varg, vector <Studentas>& kiet, bool imammediana);
+void treciastr_list(list <Studentas>& in, list<Studentas>& varg, list <Studentas>& kiet, bool imammediana);
