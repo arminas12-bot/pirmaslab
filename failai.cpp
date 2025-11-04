@@ -119,7 +119,7 @@ void atvaizdvektorius(vector <Studentas>& Grupe) {
         cout << "Irasymas i rezultatu faila uztruko: " << fixed << setprecision(4) << bendraslaikas << " s." << endl;
 
         cout << "Pasirinkite norima skaidymo strategija: " << endl;
-        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris";
+        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris" << endl;
         int strategija;
         cin >> strategija;
 
@@ -308,7 +308,7 @@ void atvaizdsarasas(list <Studentas>& Grupe) {
         cout << "Rezultatai sekmingai issaugoti" << endl;
 
         cout << "Pasirinkite norima skaidymo strategija: " << endl;
-        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris";
+        cout << "1 - du nauji to paties tipo konteineriai, 2 - naudojamas tik vienas konteineris" << endl;
         int strategija;
         cin >> strategija;
         if (strategija == 1) {
@@ -415,13 +415,12 @@ void antrastr_vector(vector <Studentas>& in, vector<Studentas>& varg, bool imamm
 
 void antrastr_list(list <Studentas>& in, list<Studentas>& varg, bool imammediana) {
     varg.clear();
-    for (auto nein = in.begin(); nein != in.end(); ) {
-        if (galutinis(*nein, imammediana) < 5.0) {
-            auto perkeliam = nein++;
-            varg.splice(varg.end(), in, perkeliam);
-        }
-        else {
-            ++nein;
-        }
-    }
+
+    auto tnet = [imammediana](const Studentas& s) {
+        return galutinis(s, imammediana) < 5.0;
+        };
+
+    copy_if(in.begin(), in.end(), back_inserter(varg), tnet);
+
+    in.remove_if(tnet);
 }
