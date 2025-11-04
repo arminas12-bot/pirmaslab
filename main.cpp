@@ -10,7 +10,7 @@ int main() {
     vector<Studentas> GrupeV;
     list<Studentas> GrupeS;
 
-    cout << "Ar duomenis norite vesti pats, ar nuskaityti is failo kursiokai.txt? Jei pats, rasykite raide p(P), jei is failo, tuomet f(F), o jei generuoti failus - rasykite g(G)." << endl;
+    cout << "Ar duomenis norite vesti pats, ar nuskaityti is failo? Jei pats, rasykite raide p(P), jei is failo, tuomet f(F), o jei generuoti failus - rasykite g(G)." << endl;
     char pasirinkta;
     cin >> pasirinkta;
 
