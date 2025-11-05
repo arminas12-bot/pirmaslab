@@ -31,12 +31,19 @@
 3. Susikurkite projektui naują vietą, pvz: C:\Projects\*Projekto pavadinimas*
 4. Sukelkite į projekto aplanką visus atsisiųstus failus.
 5. Terminale sukurkite build katalogą:
+   
 mkdir build
+
 cd build
+
 cmake .. -G "Visual Studio 17 2022" -A x64
-6. Kompiliuojame: 
+
+6. Kompiliuojame:
+
 cmake --build . --config Release
+
 .\Release\*Studentaif*.exe
+
 7. Viskas! Programa paruošta! Dabar galite spustelėti du kartus ant .exe failo ir programa pradės veikti!
 
 
