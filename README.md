@@ -25,6 +25,20 @@
 
 7. Programa baigiama, o visi rezultatai išsaugomi keliuose rezultatų failuose.
  
+# PAGRINDINIAI DIEGIMO ŽINGSNIAI
+1. Būtinai pasitikrinkite, ar įrenginyje yra idiegtas kompiliatorius su cmake.
+2. Atsisiųskite visus reikalingus failus: main.cpp, mylib.cpp, failai.cpp, failai.h, mylib.h bei CMakeLists.txt.
+3. Susikurkite projektui naują vietą, pvz: C:\Projects\*Projekto pavadinimas*
+4. Sukelkite į projekto aplanką visus atsisiųstus failus.
+5. Terminale sukurkite build katalogą:
+mkdir build
+cd build
+cmake .. -G "Visual Studio 17 2022" -A x64
+6. Kompiliuojame: 
+cmake --build . --config Release
+.\Release\*Studentaif*.exe
+7. Viskas! Programa paruošta! Dabar galite spustelėti du kartus ant .exe failo ir programa pradės veikti!
+
 
 
 ## V0.1 + V.0.2 versijos trumpas aprašymas.
